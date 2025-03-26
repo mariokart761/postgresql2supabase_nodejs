@@ -18,7 +18,7 @@ A tool for migrating data from PostgreSQL database to Supabase project. It autom
 - Existing PostgreSQL Database (Source Data)
 - Existing Supabase project (Target)
 
-## Installation
+## Setting
 
 1. Clone the repository:
 ```bash
@@ -58,10 +58,31 @@ CONNECTION_TIMEOUT=30000
 DUPLICATE_STRATEGY=update
 
 # Large Table Migration Settings
-BATCH_SIZE=1000           # Number of records per batch
+BATCH_SIZE=1000          # Number of records per batch
 MAX_RETRIES=3            # Maximum number of retries
 RETRY_DELAY=5000         # Retry delay (milliseconds)
 BATCH_TIMEOUT=30000      # Batch processing timeout (milliseconds)
+```
+The information required by Supabase can be found in Project Setting > Configuration > Data API (including project-url, anon-key, service-role-key).
+
+## Usage
+
+1. Ensure you have created the `exec_sql` function in your Supabase project. Run this SQL in the Supabase SQL Editor:
+```sql
+create or replace function exec_sql(sql text)
+returns void
+language plpgsql
+security definer
+as $$
+begin
+  execute sql;
+end;
+$$;
+```
+
+2. Run the migration:
+```bash
+npm start
 ```
 
 ## Duplicate Data Handling Strategies
@@ -86,25 +107,6 @@ For large table migrations, the tool provides the following configuration option
 
 The tool automatically saves migration progress. If the process is interrupted, you can resume from the last saved point when restarting. Progress files are stored in the `logs` directory.
 
-## Usage
-
-1. Ensure you have created the `exec_sql` function in your Supabase project. Run this SQL in the Supabase SQL Editor:
-```sql
-create or replace function exec_sql(sql text)
-returns void
-language plpgsql
-security definer
-as $$
-begin
-  execute sql;
-end;
-$$;
-```
-
-2. Run the migration:
-```bash
-npm start
-```
 
 ## Logs
 

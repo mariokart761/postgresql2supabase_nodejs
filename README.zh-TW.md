@@ -18,9 +18,9 @@
 - 現有的 PostgreSQL 資料庫（來源資料）
 - 現有的 Supabase 專案（目標）
 
-## 安裝
+## 環境安裝及設定
 
-1. 克隆專案：
+1. 複製專案：
 ```bash
 git clone https://github.com/yourusername/psql2supabase.git
 cd psql2supabase
@@ -58,10 +58,32 @@ CONNECTION_TIMEOUT=30000
 DUPLICATE_STRATEGY=update
 
 # 大型資料表遷移設定
-BATCH_SIZE=1000           # 每批處理的資料筆數
+BATCH_SIZE=1000          # 每批處理的資料筆數
 MAX_RETRIES=3            # 失敗重試次數
 RETRY_DELAY=5000         # 重試等待時間（毫秒）
 BATCH_TIMEOUT=30000      # 批次處理超時時間（毫秒）
+```
+
+Supabase 所需的資訊可以在專案設定 > 配置 > Data API 中找到（包含 project-url、anon-key、service-role-key）。
+
+## 使用方式
+
+1. 確保你已經在 Supabase 中建立了 `exec_sql` 函數（用於執行 SQL 命令），在 Supabase 專案中的 SQL Editor 運行：
+```sql
+create or replace function exec_sql(sql text)
+returns void
+language plpgsql
+security definer
+as $$
+begin
+  execute sql;
+end;
+$$;
+```
+
+2. 執行遷移：
+```bash
+npm start
 ```
 
 ## 重複資料處理策略
@@ -85,26 +107,6 @@ BATCH_TIMEOUT=30000      # 批次處理超時時間（毫秒）
 ## 進度保存
 
 工具會在遷移過程中自動保存進度，如果程式中斷，重新執行時可以選擇從上次的進度繼續。進度檔案保存在 `logs` 目錄下。
-
-## 使用方式
-
-1. 確保你已經在 Supabase 中建立了 `exec_sql` 函數（用於執行 SQL 命令），在 Supabase 專案中的 SQL Editor 運行：
-```sql
-create or replace function exec_sql(sql text)
-returns void
-language plpgsql
-security definer
-as $$
-begin
-  execute sql;
-end;
-$$;
-```
-
-2. 執行遷移：
-```bash
-npm start
-```
 
 ## 日誌
 
