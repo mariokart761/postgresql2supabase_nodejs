@@ -1,0 +1,17 @@
+{
+  "name": "psql2supabase",
+  "version": "1.0.0",
+  "description": "PostgreSQL to Supabase migration tool",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.3",
+    "@supabase/supabase-js": "^2.39.3",
+    "winston": "^3.11.0",
+    "cli-progress": "^3.12.0"
+  }
+} 
