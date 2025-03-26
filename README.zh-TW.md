@@ -22,7 +22,7 @@
 
 1. 複製專案：
 ```bash
-git clone https://github.com/yourusername/psql2supabase.git
+git clone https://github.com/mariokart761/psql2supabase.git
 cd psql2supabase
 ```
 

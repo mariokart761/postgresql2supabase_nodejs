@@ -22,7 +22,7 @@ A tool for migrating data from PostgreSQL database to Supabase project. It autom
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/psql2supabase.git
+git clone https://github.com/mariokart761/psql2supabase.git
 cd psql2supabase
 ```
 
